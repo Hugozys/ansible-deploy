@@ -1,0 +1,27 @@
+name: 'ansible-deploy'
+description: 'This runs your ansible playbook in ansible container'
+inputs:
+  playbook:
+    description: 'playbook name.'
+    required: false
+    default: "playbook.yaml"
+  directory:
+    description: 'path to the root directory where your ansible code lives'
+    required: false
+    default: '.'
+  envvars:
+    description: 'environment variables you need to pass to the playbook'
+    required: false
+  extvars:
+    description: 'extra varibles you need to pass to the playbook'
+    required: false
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    ANSIBLE_DIRECTORY: ${{inputs.directory}}
+    ANSIBLE_INVENTORY: "~/inventory" # let ansible read hosts from this directory
+    ANSIBLE_ENVVARS: ${{inputs.envvars}}
+    ANSIBLE_EXTVARS: ${{inputs.extvars}}
+    ANSIBLE_PLAYBOOK: ${{inputs.playbook}}

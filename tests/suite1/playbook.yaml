@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Assert environment variables
+    assert:
+      that:
+        - "{{ lookup('env','KEY') == 'KEY_VALUE' }}"
+        - "{{ lookup('env', 'FRUIT') == 'APPLE' }}"
+        - "{{ lookup('env', 'SECRET') == '309djlaljoiwl-fowkd' }}"
+      fail_msg: "expect KEY_VALUE but found {{ lookup('env', 'KEY') }}"
+      success_msg: "passed"
+

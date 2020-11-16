@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Assert extra variables
+    assert:
+      that:
+        - "{{ package == 'tests/playbook.zip' }}"
+        - "{{ username == 'root' }}"
+        - "{{ os == 'linux' }}"
+      fail_msg: "not matched"
+      success_msg: "passed"
+

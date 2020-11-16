@@ -1,0 +1,48 @@
+on:
+  push:
+    path-ignores:
+      - image/**/*
+  pull_request:
+    path-ignores:
+      - image/**/*
+    branches:
+      - master
+jobs:
+    suite1:
+      runs-on: ubuntu-latest
+      name: Test env
+      steps:
+      - uses: actions/checkout@v2
+      - name: run in ansible
+        uses: ./
+        with:
+          directory: './tests/suite1'
+          envvars: |
+            KEY:KEY_VALUE
+            FRUIT:APPLE
+            SECRET:309djlaljoiwl-fowkd
+
+    suite2:
+      runs-on: ubuntu-latest
+      name: Test extra variables
+      steps:
+      - uses: actions/checkout@v2
+      - name: run in ansible
+        uses: ./
+        with:
+          directory: './tests/suite2'
+          extvars: |
+            package=tests/playbook.zip
+            username=root
+            os=linux
+          playbook: ./playbook.yaml
+
+    suite3:
+      runs-on: ubuntu-latest
+      name: deploy apaache2 to local
+      steps:
+      - uses: actions/checkout@v2
+      - name: Use ansible-deploy
+        uses: ./
+        with:
+          directory: './tests/suite3'
