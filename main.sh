@@ -20,5 +20,6 @@ eval "$(exp envs)"
 option="\"$(exp vars)\""
 if [ -n "${option}" ]; then cmd="${cmd} -e ${option}"; fi
 
+echo -e "${cmd}"
 eval "${cmd}"
 

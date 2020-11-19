@@ -8,21 +8,21 @@ on:
     branches:
       - master
 jobs:
-    suite1:
+    validate-envvars:
       runs-on: ubuntu-latest
-      name: Test env
+      name: Test environment variables
       steps:
       - uses: actions/checkout@v2
       - name: run in ansible
         uses: ./
         with:
-          directory: './tests/suite1'
+          directory: './tests/validate-envvars'
           envvars: |
             KEY:KEY_VALUE
             FRUIT:APPLE
             SECRET:309djlaljoiwl-fowkd
 
-    suite2:
+    validate-extvars:
       runs-on: ubuntu-latest
       name: Test extra variables
       steps:
@@ -30,14 +30,14 @@ jobs:
       - name: run in ansible
         uses: ./
         with:
-          directory: './tests/suite2'
+          directory: './tests/validate-extvars'
           extvars: |
             package=tests/playbook.zip
             username=root
             os=linux
           playbook: ./playbook.yaml
 
-    suite3:
+    setup-apache-2:
       runs-on: ubuntu-latest
       name: deploy apaache2 to local
       steps:
@@ -45,4 +45,4 @@ jobs:
       - name: Use ansible-deploy
         uses: ./
         with:
-          directory: './tests/suite3'
+          directory: './tests/setup-apache-2'
