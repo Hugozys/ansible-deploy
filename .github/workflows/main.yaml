@@ -2,9 +2,13 @@ on:
   push:
     path-ignores:
       - image/**/*
+      - **.md
+      - LICENSE
   pull_request:
     path-ignores:
       - image/**/*
+      - **.md
+      - LICENSE
     branches:
       - master
 jobs:
