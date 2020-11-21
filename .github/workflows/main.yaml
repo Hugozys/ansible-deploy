@@ -52,8 +52,7 @@ jobs:
         uses: ./
         with:
           directory: './tests/validate-ssh-key'
-          # you should pass in a variable when use this action instead of plain text
-          ssh_key: 123
+          ssh_key: ${{ secrets.SAMPLE_SSH_KEY }}
           playbook: ./playbook.yaml
 
     setup-apache-2:

@@ -30,11 +30,21 @@ def env(name):
         return True, value
     return False, None
 
-def runshell(commandlist, capture=False, txt=None):
-    return subprocess.run(commandlist, capture_output=capture, text=txt, check=True)
+def runshell(commandlist, capture=False, txt=None, sh=False):
+    return subprocess.run(commandlist, capture_output=capture, text=txt, shell=sh, check=True)
 
 def homedir():
     return os.path.expanduser("~")
+
+def add_ssh_agent():
+    output = runshell(["ssh-agent", "-s"], capture=True, txt=True, sh=True)
+    auth_engine = re.compile("SSH_AUTH_SOCK=(.*?);")
+    agent_engine = re.compile("SSH_AGENT_PID=(.*?);")
+    sock = auth_engine.search(output.stdout)
+    agentid = agent_engine.search(output.stdout)
+    os.environ["SSH_AUTH_SOCK"] = sock.group(1)
+    os.environ["SSH_AGENT_PID"] = agentid.group(1)
+
 
 def setup_private_key():
     ssh_path = homedir() + "/.ssh/"
@@ -47,14 +57,16 @@ def setup_private_key():
         f = open(filepath, 'w')
         f.write(key_value)
         f.close()
+        os.chmod(filepath, 0o600)
+        add_ssh_agent()
+        runshell(["ssh-add", filepath])
         pass
-
 
 def export_envs():
     process("ANSIBLE_ENVVARS", handle_envvars, ":")
 
 def execute_playbook():
-    command = ["ansible-playbook", "-vvv"]
+    command = ["ansible-playbook"]
     command.append(env("ANSIBLE_PLAYBOOK")[1])
     extra_vars = process("ANSIBLE_EXTVARS", handle_extvars, "=")
     if (extra_vars):
