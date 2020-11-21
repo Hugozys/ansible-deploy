@@ -1,0 +1,26 @@
+- hosts: 127.0.0.1
+  connection: local
+  become: true
+  tasks:
+  - name: Get ssh file status
+    stat:
+        path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+    register: stat_result
+
+  - name: File should exist
+    assert:
+      that:
+        - stat_result.stat.exists
+      fail_msg: "ssh file doesn't exist"
+      success_msg: "passed"
+
+  - name: Get file content
+    command: cat {{ lookup('env', 'HOME') }}/.ssh/id_rsa
+    register: key_value
+
+  - name: File content should match
+    assert:
+      that:
+        - "{{ key_value.stdout == '123' }}"
+      fail_msg: "key value didn't match expectation"
+      success_msg: "passed"

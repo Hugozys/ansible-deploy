@@ -15,6 +15,13 @@ inputs:
   extvars:
     description: 'extra varibles you need to pass to the playbook'
     required: false
+  ssh_key:
+    description: 'the private ssh key you use to connect to remote node'
+    required: false
+  ssh_key_file_name:
+    description: 'file name of your private ssh key. It will be put under ~/.ssh/'
+    required: false
+    default: "id_rsa"
 
 runs:
   using: 'docker'
@@ -25,3 +32,5 @@ runs:
     ANSIBLE_ENVVARS: ${{inputs.envvars}}
     ANSIBLE_EXTVARS: ${{inputs.extvars}}
     ANSIBLE_PLAYBOOK: ${{inputs.playbook}}
+    SSH_PRIVATE_KEY: ${{inputs.ssh_key}}
+    SSH_PRIVATE_KEY_FILE: ${{inputs.ssh_key_file_name}}

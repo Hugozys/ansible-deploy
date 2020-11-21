@@ -1,13 +1,15 @@
+name: main pipeline
+
 on:
   push:
-    path-ignores:
+    paths-ignore:
       - image/**/*
-      - "**.md"
+      - "**/*.md"
       - LICENSE
   pull_request:
-    path-ignores:
+    paths-ignore:
       - image/**/*
-      - "**.md"
+      - "**/*.md"
       - LICENSE
     branches:
       - master
@@ -39,6 +41,19 @@ jobs:
             package=tests/playbook.zip
             username=root
             os=linux
+          playbook: ./playbook.yaml
+
+    validate-ssh-key:
+      runs-on: ubuntu-latest
+      name: Test private ssh key setup
+      steps:
+      - uses: actions/checkout@v2
+      - name: run in ansible
+        uses: ./
+        with:
+          directory: './tests/validate-ssh-key'
+          # you should pass in a variable when use this action instead of plain text
+          ssh_key: 123
           playbook: ./playbook.yaml
 
     setup-apache-2:

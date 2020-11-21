@@ -1,3 +1,5 @@
+name: push image
+
 on:
   push:
     paths:

@@ -1,8 +1,6 @@
 FROM hugozzys/ansible-deploy:latest
 
-ADD main.sh .
-COPY export.py /usr/bin/exp
-RUN chmod 777 /usr/bin/exp
-RUN chmod 777 ./main.sh
+COPY run.py /usr/bin/run_play
+RUN chmod 777 /usr/bin/run_play
 
-ENTRYPOINT ["/main.sh"]
+ENTRYPOINT ["run_play"]
