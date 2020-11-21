@@ -21,6 +21,6 @@
   - name: File content should match
     assert:
       that:
-        - "{{ key_value.stdout == '123' }}"
+        - "{{ (key_value.stdout | trim) == (lookup('env', 'SSH_PRIVATE_KEY') | trim) }}"
       fail_msg: "key value didn't match expectation"
       success_msg: "passed"
