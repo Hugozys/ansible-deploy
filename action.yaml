@@ -22,7 +22,10 @@ inputs:
     description: 'file name of your private ssh key. It will be put under ~/.ssh/'
     required: false
     default: "id_rsa"
-
+  verbose:
+    description: 'define the verbosity level of output when running your playook'
+    rquired: false
+    default: "0"
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -33,5 +36,6 @@ runs:
     ANSIBLE_ENVVARS: ${{inputs.envvars}}
     ANSIBLE_EXTVARS: ${{inputs.extvars}}
     ANSIBLE_PLAYBOOK: ${{inputs.playbook}}
+    ANSIBLE_VERBOSE_LEVEL: ${{inputs.verbose}}
     SSH_PRIVATE_KEY: ${{inputs.ssh_key}}
     SSH_PRIVATE_KEY_FILE: ${{inputs.ssh_key_file_name}}

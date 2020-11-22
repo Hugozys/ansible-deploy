@@ -1,0 +1,8 @@
+- hosts: 127.0.0.1
+  connection: local
+  become: true
+  tasks:
+  - name: install curl
+    command: apt install -y curl
+  - name: curl google
+    command: curl www.google.com
