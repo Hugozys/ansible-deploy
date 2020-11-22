@@ -29,6 +29,7 @@ runs:
   env:
     ANSIBLE_DIRECTORY: ${{inputs.directory}}
     ANSIBLE_INVENTORY: "~/inventory" # let ansible read hosts from this directory
+    ANSIBLE_HOST_KEY_CHECKING: "False" #  avoid host key checking by the underlying tools Ansible uses to connect to the host
     ANSIBLE_ENVVARS: ${{inputs.envvars}}
     ANSIBLE_EXTVARS: ${{inputs.extvars}}
     ANSIBLE_PLAYBOOK: ${{inputs.playbook}}
