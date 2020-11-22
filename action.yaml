@@ -1,5 +1,6 @@
-name: 'ansible-deploy'
+name: Run your Ansible playbook in a docker container
 description: 'This runs your ansible playbook in ansible container'
+author: Hugo Zhang <hugozzys@gmail.com>
 inputs:
   playbook:
     description: 'playbook name.'
