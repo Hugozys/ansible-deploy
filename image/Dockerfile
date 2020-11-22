@@ -6,4 +6,6 @@ FROM ubuntu:latest
   && pip3 install --upgrade pip
 
  RUN pip3 install paramiko \
-  && pip3 install ansible   
+  && pip3 install ansible \
+  && pip3 install jmespath
+
