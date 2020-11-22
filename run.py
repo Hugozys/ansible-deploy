@@ -65,9 +65,20 @@ def setup_private_key():
 def export_envs():
     process("ANSIBLE_ENVVARS", handle_envvars, ":")
 
+def get_verbose_level():
+    _, vlv = env("ANSIBLE_VERBOSE_LEVEL")
+    if (vlv == "4"):
+        return ["-vvvv"]
+    if (vlv == "3"):
+        return ["-vvv"]
+    if (vlv == "1"):
+        return ["-v"]
+    return []
+
 def execute_playbook():
     command = ["ansible-playbook"]
     command.append(env("ANSIBLE_PLAYBOOK")[1])
+    command.extend(get_verbose_level())
     extra_vars = process("ANSIBLE_EXTVARS", handle_extvars, "=")
     if (extra_vars):
         command.extend(["-e",extra_vars])

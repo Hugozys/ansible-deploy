@@ -55,6 +55,17 @@ jobs:
           ssh_key: ${{ secrets.SAMPLE_SSH_KEY }}
           playbook: ./playbook.yaml
 
+    validate-verbose:
+      runs-on: ubuntu-latest
+      name: Test verbosity
+      steps:
+      - uses: actions/checkout@v2
+      - name: run in ansible
+        uses: ./
+        with:
+          directory: './tests/validate-verbose'
+          verbose: '4'
+
     setup-apache-2:
       runs-on: ubuntu-latest
       name: deploy apaache2 to local
